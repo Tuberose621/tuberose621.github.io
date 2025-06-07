@@ -1,0 +1,653 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Swift 相关知识点学习 | 技术成长笔记</title><meta name="author" content="葛聪颖"><meta name="copyright" content="葛聪颖"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、Main Actor 隔离12345678910111213.task &#123;    await withTaskGroup(of: Void.self) &#123; group in        group.addTask &#123;            uploadData()        &#125;        group.addTask &#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift 相关知识点学习">
+<meta property="og:url" content="https://tuberose621.github.io/2025/05/07/Swift%20%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="技术成长笔记">
+<meta property="og:description" content="一、Main Actor 隔离12345678910111213.task &#123;    await withTaskGroup(of: Void.self) &#123; group in        group.addTask &#123;            uploadData()        &#125;        group.addTask &#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuberose621.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-05-07T10:03:15.000Z">
+<meta property="article:modified_time" content="2025-06-07T08:32:40.118Z">
+<meta property="article:author" content="葛聪颖">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuberose621.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Swift 相关知识点学习",
+  "url": "https://tuberose621.github.io/2025/05/07/Swift%20%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/",
+  "image": "https://tuberose621.github.io/img/butterfly-icon.png",
+  "datePublished": "2025-05-07T10:03:15.000Z",
+  "dateModified": "2025-06-07T08:32:40.118Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "葛聪颖",
+      "url": "https://tuberose621.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tuberose621.github.io/2025/05/07/Swift%20%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Swift 相关知识点学习',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /><meta http-equiv="Pragma" content="no-cache" /><meta http-equiv="Expires" content="0" /><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">技术成长笔记</span></a><a class="nav-page-title" href="/"><span class="site-name">Swift 相关知识点学习</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Swift 相关知识点学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-07T10:03:15.000Z" title="发表于 2025-05-07 18:03:15">2025-05-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-07T08:32:40.118Z" title="更新于 2025-06-07 16:32:40">2025-06-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="一、Main-Actor-隔离"><a href="#一、Main-Actor-隔离" class="headerlink" title="一、Main Actor 隔离"></a>一、Main Actor 隔离</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.task &#123;</span><br><span class="line">    <span class="keyword">await</span> withTaskGroup(of: <span class="type">Void</span>.<span class="keyword">self</span>) &#123; group <span class="keyword">in</span></span><br><span class="line">        group.addTask &#123;</span><br><span class="line">            uploadData()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        group.addTask &#123;</span><br><span class="line">            <span class="comment">// Disable Idle Timer to avoid auto-locking screen  </span></span><br><span class="line">            <span class="type">UIApplication</span>.shared.isIdleTimerDisabled <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>遇到的这个编译错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Main actor-isolated class property &#x27;shared&#x27; can not be mutated from a Sendable closure</span><br></pre></td></tr></table></figure>
+
+<p>是因为在 <code>.task</code> 这个 <code>modifier</code> 的异步闭包中访问了 <code>UIApplication.shared.isIdleTimerDisabled = true</code>，而这个属性 <strong>受 Main Actor 隔离（Main actor-isolated）</strong>，不能在一个并发上下文中（比如 <code>TaskGroup</code> 内部）直接修改。</p>
+<hr>
+<h3 id="⚠️-原因分析："><a href="#⚠️-原因分析：" class="headerlink" title="⚠️ 原因分析："></a>⚠️ 原因分析：</h3><ul>
+<li><code>UIApplication.shared</code> 是 <code>MainActor</code> 隔离的，也就是说只能在主线程上访问和修改它的属性。</li>
+<li><code>.task</code> 是并发上下文，<code>Swift</code> 认为这个闭包是 <code>@Sendable</code>，意味着它可能在任意线程运行。</li>
+<li>在 <code>TaskGroup</code> 的闭包中调用 <code>UIApplication.shared.isIdleTimerDisabled = true</code>，就是从非主线程修改主线程隔离属性，因此编译器报错。</li>
+</ul>
+<hr>
+<h3 id="✅-解决方案："><a href="#✅-解决方案：" class="headerlink" title="✅ 解决方案："></a>✅ 解决方案：</h3><h4 id="方法一：在主线程中设置-isIdleTimerDisabled"><a href="#方法一：在主线程中设置-isIdleTimerDisabled" class="headerlink" title="方法一：在主线程中设置 isIdleTimerDisabled"></a>方法一：在主线程中设置 <code>isIdleTimerDisabled</code></h4><p>你可以把它包裹到 <code>MainActor.run</code> 中运行：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">group.addTask &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="type">MainActor</span>.run &#123;</span><br><span class="line">        <span class="type">UIApplication</span>.shared.isIdleTimerDisabled <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法二：把-UIApplication-shared-isIdleTimerDisabled-true-放到-onAppear-或-DispatchQueue-main-async-中"><a href="#方法二：把-UIApplication-shared-isIdleTimerDisabled-true-放到-onAppear-或-DispatchQueue-main-async-中" class="headerlink" title="方法二：把 UIApplication.shared.isIdleTimerDisabled = true 放到 .onAppear 或 DispatchQueue.main.async 中"></a>方法二：把 <code>UIApplication.shared.isIdleTimerDisabled = true</code> 放到 <code>.onAppear</code> 或 <code>DispatchQueue.main.async</code> 中</h4><p>其实完全可以避免放在 <code>task</code> 的 <code>group</code> 中，像这样写也可以：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.onAppear &#123;</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.asyncAfter(deadline: .now() <span class="operator">+</span> <span class="number">0.5</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.onboarding()</span><br><span class="line">        <span class="type">UIApplication</span>.shared.isIdleTimerDisabled <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者直接：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.onAppear &#123;</span><br><span class="line">    <span class="type">UIApplication</span>.shared.isIdleTimerDisabled <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="✅-总结建议"><a href="#✅-总结建议" class="headerlink" title="✅ 总结建议"></a>✅ 总结建议</h3><p>由于设置 <code>isIdleTimerDisabled</code> 本身并不耗时，也不需要并发处理，<strong>直接放在 <code>.onAppear</code> 中或者使用 <code>MainActor.run</code> 包裹，确保线程安全即可。</strong></p>
+<hr>
+<h3 id="一、先解释：-MainActor-是什么？"><a href="#一、先解释：-MainActor-是什么？" class="headerlink" title="一、先解释：@MainActor 是什么？"></a>一、先解释：<code>@MainActor</code> 是什么？</h3><h4 id="👉-它的作用："><a href="#👉-它的作用：" class="headerlink" title="👉 它的作用："></a>👉 它的作用：</h4><p><code>@MainActor</code> 是 <code>Swift</code> 的一种 <strong>actor 隔离机制</strong>，用于确保标记的变量或方法 <strong>只能在主线程上被访问或修改</strong>，适用于：</p>
+<ul>
+<li><code>UI</code> 相关的属性（比如 <code>SwiftUI / UIKit</code> 的 <code>UI</code> 状态）</li>
+<li>线程安全性要求高的变量（尤其和主线程交互）</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MainActor</span></span><br><span class="line"><span class="keyword">var</span> title: <span class="type">String</span>  <span class="comment">// 只能在主线程读取或写入</span></span><br></pre></td></tr></table></figure>
+
+<p>在原来的代码里，不用加 <code>@MainActor</code> 也可以，只要<strong>保证在主线程上更新 UI 状态或平台变量即可</strong>。</p>
+<hr>
+<hr>
+<h4 id="同步耗时操作阻塞主线程"><a href="#同步耗时操作阻塞主线程" class="headerlink" title="同步耗时操作阻塞主线程"></a>同步耗时操作阻塞主线程</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">init</span>() &#123;</span><br><span class="line">    <span class="comment">// Check if UserDefaults contains platform key</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> platform <span class="operator">=</span> <span class="type">UserDefaults</span>.standard.string(forKey: <span class="string">&quot;Platform&quot;</span>), <span class="keyword">let</span> platform <span class="operator">=</span> <span class="type">Platform</span>(rawValue: platform) &#123;</span><br><span class="line">        <span class="keyword">self</span>.platform <span class="operator">=</span> platform</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.platform <span class="operator">=</span> <span class="type">MyCommand</span>.shared.searchPlatform()</span><br><span class="line">        <span class="type">UserDefaults</span>.standard.set(<span class="keyword">self</span>.platform.rawValue, forKey: <span class="string">&quot;Platform&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">Task</span> &#123;</span><br><span class="line">        <span class="keyword">switch</span> <span class="keyword">self</span>.platform &#123;</span><br><span class="line">        <span class="keyword">case</span> .platform10xx:</span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">_</span> <span class="operator">=</span> <span class="type">MyCommand</span>.shared.initXXXListener()</span><br><span class="line">        <span class="keyword">case</span> .platform20xx:</span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">_</span> <span class="operator">=</span> <span class="type">MyCommand</span>.shared.initXXXEvent()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个 <code>MyCommand.shared.searchPlatform()</code> 是执行命令，返回平台是<code>platform10xx</code>还是 <code>platform20xx</code>。可能比较耗时，使用异步线程调用就解决了这个问题。它为什么会影响 <code>view</code> 的启动。</p>
+<hr>
+<p>🧠 一、为什么 <code>MyCommand.shared.searchPlatform()</code> 会影响 <code>view</code> 启动？</p>
+<p>✅ 原因归结为一点：<strong>它是一个</strong>“<strong>同步耗时操作</strong>”，放在 <strong>初始化阶段（<code>init</code>）阻塞主线程</strong>，间接破坏了 <code>AVKit</code> 或 <code>UI</code> 的初始化时机。</p>
+<h4 id="🔍-具体影响路径："><a href="#🔍-具体影响路径：" class="headerlink" title="🔍 具体影响路径："></a>🔍 具体影响路径：</h4><ol>
+<li><code>init()</code> 是在主线程上调用的，如果其中执行了耗时操作（如 <code>searchPlatform()</code> 是同步执行 <code>shell</code> 命令或 <code>I/O</code> 的话）——</li>
+<li>会 <strong>阻塞主线程</strong>，导致整个 <code>app UI</code> 构建、系统服务（如 <code>AVAudioSession</code>、<code>AVPlayer</code>、<code>AVPiPController</code>）初始化延迟甚至错过系统期望的生命周期阶段。</li>
+<li>特别是 <strong>PiP view初始化涉及的系统服务需要在合适的生命周期点启动，且依赖主线程的“响应性”</strong>，此时如果主线程卡住，就会出现系统组件初始化失败，或者系统认为“你不支持 <code>PiP</code>”。</li>
+</ol>
+<p>✅ 将 <code>searchPlatform()</code> 放到异步线程后，系统组件终于能按时正常初始化，自然也就不会影响 <code>PiP</code> 启动了。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">init</span>() &#123;</span><br><span class="line">    <span class="type">Task</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">self</span>.setupPlatformt()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">func</span> <span class="title function_">setupPlatform</span>() <span class="keyword">async</span> &#123;</span><br><span class="line">    <span class="comment">// 1. Get platform (cache first)</span></span><br><span class="line">    <span class="keyword">let</span> detectedPlatform: <span class="type">Platform</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> cached <span class="operator">=</span> <span class="type">UserDefaults</span>.standard.string(forKey: <span class="string">&quot;Platform&quot;</span>),</span><br><span class="line">       <span class="keyword">let</span> cachedPlatform <span class="operator">=</span> <span class="type">Platform</span>(rawValue: cached) &#123;</span><br><span class="line">        detectedPlatform <span class="operator">=</span> cachedPlatform</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        detectedPlatform <span class="operator">=</span> <span class="keyword">await</span> withCheckedContinuation &#123; continuation <span class="keyword">in</span></span><br><span class="line">            <span class="type">DispatchQueue</span>.global(qos: .userInitiated).async &#123;</span><br><span class="line">                <span class="keyword">let</span> result <span class="operator">=</span> <span class="type">MyCommand</span>.shared.searchPlatform()</span><br><span class="line">                continuation.resume(returning: result)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Caching platform values</span></span><br><span class="line">        <span class="type">UserDefaults</span>.standard.set(detectedPlatform.rawValue, forKey: <span class="string">&quot;Platform&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2. Update local variables </span></span><br><span class="line">    <span class="keyword">self</span>.platform <span class="operator">=</span> detectedPlatform</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 3. Execute initialization commands according to the platform</span></span><br><span class="line">    <span class="keyword">switch</span> detectedPlatform &#123;</span><br><span class="line">        <span class="keyword">case</span> .platform10xx:</span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">_</span> <span class="operator">=</span> <span class="type">MyCommand</span>.shared.initXXXListener()</span><br><span class="line">        <span class="keyword">case</span> .platform20xx:</span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">_</span> <span class="operator">=</span> <span class="type">MyCommand</span>.shared.initXXXEvent()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="✅-1-init-方法一般用来做什么？"><a href="#✅-1-init-方法一般用来做什么？" class="headerlink" title="✅ 1. init() 方法一般用来做什么？"></a>✅ 1. <code>init()</code> 方法一般用来做什么？</h3><h4 id="💡-init-的本质职责："><a href="#💡-init-的本质职责：" class="headerlink" title="💡 init() 的本质职责："></a>💡 <code>init()</code> 的本质职责：</h4><blockquote>
+<p>构造出<strong>有效可用的对象初始状态</strong>，不建议在其中执行副作用重的逻辑，尤其是：</p>
+</blockquote>
+<ul>
+<li>耗时操作，异步任务，系统权限请求，网络请求 &#x2F; 文件访问，主线程 <code>UI</code> 修改</li>
+</ul>
+<h4 id="❗为什么？"><a href="#❗为什么？" class="headerlink" title="❗为什么？"></a>❗为什么？</h4><ul>
+<li><code>init()</code> 是同步执行的，若在其内执行耗时逻辑会阻塞主线程，尤其在 <code>App</code> 启动阶段；</li>
+<li>如果 <code>init()</code> 失败或者行为不可预测，会导致对象构造异常，使程序逻辑失控；</li>
+<li>异步操作在 <code>init()</code> 内很难正确捕获、管理生命周期（比如 <code>weak self</code>、任务取消等）；</li>
+<li>构造函数不支持 <code>async</code>，所以只能硬塞 <code>Task</code> 或 <code>DispatchQueue</code>，这会让副作用不可控。</li>
+</ul>
+<hr>
+<h4 id="✅-合理的-init-用法-✅"><a href="#✅-合理的-init-用法-✅" class="headerlink" title="✅ 合理的 init() 用法 ✅"></a>✅ 合理的 <code>init()</code> 用法 ✅</h4><table>
+<thead>
+<tr>
+<th>合法的行为</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>设置默认值</td>
+<td>初始化本地属性，比如 <code>self.platform = .unknown</code></td>
+</tr>
+<tr>
+<td>从内存中恢复状态</td>
+<td>例如 <code>UserDefaults</code> &#x2F; 本地缓存</td>
+</tr>
+<tr>
+<td>创建依赖对象</td>
+<td>比如 <code>Logger()</code>、<code>URLSession()</code></td>
+</tr>
+<tr>
+<td>做轻量判断逻辑</td>
+<td>不会阻塞线程</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="❌-不推荐的-init-行为-❌"><a href="#❌-不推荐的-init-行为-❌" class="headerlink" title="❌ 不推荐的 init() 行为 ❌"></a>❌ 不推荐的 <code>init()</code> 行为 ❌</h4><table>
+<thead>
+<tr>
+<th>不推荐的行为</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>执行 <code>shell</code> 命令 &#x2F; <code>I/O</code> 操作</td>
+<td>易阻塞主线程，且不易捕获异常</td>
+</tr>
+<tr>
+<td>配置系统服务（如 <code>AVAudioSession</code>）</td>
+<td>初始化时系统组件可能尚未准备好</td>
+</tr>
+<tr>
+<td>创建 <code>AVPlayer / PiP Controller</code> 等系统资源</td>
+<td>这些往往依赖系统生命周期和 <code>UI</code> 状态</td>
+</tr>
+<tr>
+<td>启动异步任务并期望依赖其结果</td>
+<td>初始化结束后没法等结果完成，不可预测</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="🧠-2-那耗时或异步操作放在哪更合适？"><a href="#🧠-2-那耗时或异步操作放在哪更合适？" class="headerlink" title="🧠 2. 那耗时或异步操作放在哪更合适？"></a>🧠 2. 那耗时或异步操作放在哪更合适？</h3><ul>
+<li>放在 <strong><code>Task</code> 中，异步执行</strong></li>
+<li>放在 <strong><code>viewDidAppear</code>、<code>.task</code> modifier、<code>.onAppear</code></strong> 中</li>
+<li>放在 <strong><code>init()</code> 后的 setup()&#x2F;load()&#x2F;start()</strong> 方法中，延后主动调用</li>
+</ul>
+<hr>
+<hr>
+<h2 id="二、private-set-和-didSet"><a href="#二、private-set-和-didSet" class="headerlink" title="二、private(set) 和  didSet"></a>二、private(set) 和  didSet</h2><p>这是 Swift 中一种非常<strong>简洁且实用的语法组合</strong></p>
+<h3 id="完整语法结构分析"><a href="#完整语法结构分析" class="headerlink" title="完整语法结构分析"></a>完整语法结构分析</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private(set)</span> <span class="keyword">var</span> currentSession: <span class="type">MySession</span>? &#123;</span><br><span class="line">    <span class="keyword">didSet</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> currentSession &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="1-private-set-：访问权限控制"><a href="#1-private-set-：访问权限控制" class="headerlink" title="1. private(set)：访问权限控制"></a>1. <code>private(set)</code>：访问权限控制</h4><ul>
+<li><strong>含义</strong>：<code>currentSession</code> 对<strong>外部可读</strong>，但只有<strong>当前作用域（比如类）内部可以修改</strong>。</li>
+<li>目的：<strong>保护这个值只能被类内部逻辑控制修改，外部只能观察（只读）</strong>。</li>
+</ul>
+<hr>
+<h4 id="2-var-currentSession-MySession"><a href="#2-var-currentSession-MySession" class="headerlink" title="2. var currentSession: MySession?"></a>2. <code>var currentSession: MySession?</code></h4><ul>
+<li><strong>属性定义</strong>：这是一个可选类型（<code>MySession?</code>），表示可能有值，也可能是 <code>nil</code>。</li>
+</ul>
+<hr>
+<h4 id="3-didSet-是属性观察器"><a href="#3-didSet-是属性观察器" class="headerlink" title="3. didSet 是属性观察器"></a>3. <code>didSet</code> 是属性观察器</h4><ul>
+<li><strong>作用</strong>：一旦 <code>currentSession</code> 被赋新值，<code>didSet</code> 块就会自动执行。</li>
+<li>用于<strong>做副作用的处理</strong>，比如：记录日志、更新相关状态、触发其他逻辑。</li>
+</ul>
+<hr>
+<h3 id="4-if-let-currentSession-是-简化版的-Optional-Binding"><a href="#4-if-let-currentSession-是-简化版的-Optional-Binding" class="headerlink" title="4. if let currentSession 是 简化版的 Optional Binding"></a>4. <code>if let currentSession</code> 是 <strong>简化版的 Optional Binding</strong></h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> currentSession &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等价于：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> currentSession <span class="operator">=</span> currentSession &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Swift 5.7+ 中支持这种 <strong>简写绑定形式</strong>。</p>
+<hr>
+<h3 id="5-didSet-内的逻辑说明"><a href="#5-didSet-内的逻辑说明" class="headerlink" title="5. didSet 内的逻辑说明"></a>5. <code>didSet</code> 内的逻辑说明</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.sessionStart <span class="operator">=</span> <span class="type">Date</span>()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置会话开始时间。</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.logPath <span class="operator">=</span> currentSession.folderPath <span class="operator">+</span> <span class="string">&quot;/myLog.txt&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置日志路径，基于当前的测试会话文件夹路径。</li>
+</ul>
+<hr>
+<h2 id="📌-小结：这是一个“状态属性-观察器-封装写权限”的典型用法"><a href="#📌-小结：这是一个“状态属性-观察器-封装写权限”的典型用法" class="headerlink" title="📌 小结：这是一个“状态属性 + 观察器 + 封装写权限”的典型用法"></a>📌 小结：这是一个“状态属性 + 观察器 + 封装写权限”的典型用法</h2><p>它实现了：</p>
+<ul>
+<li>状态更新控制</li>
+<li>自动执行副作用（如时间记录、日志输出）</li>
+<li>属性值变化的封装保护（<code>private(set)</code>）</li>
+<li>函数式逻辑与日志的结合</li>
+</ul>
+<hr>
+<h3 id="📚-可借鉴的场景"><a href="#📚-可借鉴的场景" class="headerlink" title="📚 可借鉴的场景"></a>📚 可借鉴的场景</h3><ul>
+<li>登录用户信息：更新 <code>currentUser</code> 时触发 <code>UI</code> 更新</li>
+<li>网络会话对象：更新 <code>session</code> 时触发日志与状态同步</li>
+<li>设备连接状态：更新连接状态时重设内部依赖项</li>
+</ul>
+<hr>
+<hr>
+<h2 id="三、串行队列-DispatchQueue"><a href="#三、串行队列-DispatchQueue" class="headerlink" title="三、串行队列 DispatchQueue"></a>三、串行队列 DispatchQueue</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">DispatchQueue</span>(label: <span class="string">&quot;com.test.queue&quot;</span>, qos: .userInitiated)</span><br></pre></td></tr></table></figure>
+
+<p>这个代码中的 <code>DispatchQueue</code> 是一个串行队列（<code>serial queue</code>）。在这行代码中，<code>DispatchQueue(label: &quot;com.test.queue&quot;, qos: .userInitiated)</code> 创建了一个串行队列，但它的使用是否异步取决于如何在队列中调度任务。</p>
+<h3 id="解释："><a href="#解释：" class="headerlink" title="解释："></a>解释：</h3><ol>
+<li><p><strong>串行队列（Serial Queue）</strong>:</p>
+<ul>
+<li>串行队列按顺序执行任务，一个任务在前一个任务完成后才会执行下一个任务。即使将多个任务放入队列，它们也会逐一执行，而不会并行。</li>
+<li>通过传递 <code>label</code> 来创建一个串行队列。这里的 <code>com.test.queue</code> 只是队列的名称，<code>qos: .userInitiated</code> 是队列的质量服务（<code>Quality of Service</code>）级别，表示任务是用户发起的，应该优先执行。</li>
+</ul>
+</li>
+<li><p><strong>为什么不是异步的</strong>：</p>
+<ul>
+<li>当创建了一个队列，但队列的调度模式是决定异步还是同步的。在这行代码中，队列本身没有指定任务的调度方式。</li>
+<li>如果在队列中调度任务时使用的是 <strong><code>async</code></strong>，那么任务就是异步执行的；如果使用的是 <strong><code>sync</code></strong>，则是同步执行。</li>
+</ul>
+</li>
+</ol>
+<p>例如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">DispatchQueue</span>(label: <span class="string">&quot;com.test.queue&quot;</span>, qos: .userInitiated)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 异步调度任务</span></span><br><span class="line">queue.async &#123;</span><br><span class="line">    <span class="comment">// 异步任务</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;This is async task&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步调度任务</span></span><br><span class="line">queue.sync &#123;</span><br><span class="line">    <span class="comment">// 同步任务</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;This is sync task&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>async</code> 会让任务在队列中异步执行，意味着它会立即返回，不会等待任务完成。</li>
+<li><code>sync</code> 会让任务同步执行，意味着它会阻塞当前线程，直到任务完成。</li>
+</ul>
+<p>总结：</p>
+<ul>
+<li><code>DispatchQueue(label: &quot;com.test.queue&quot;)</code> 本身只是创建了一个队列，决定是否异步或同步是在调度任务时选择 <code>async</code> 或 <code>sync</code> 来决定的。</li>
+</ul>
+<hr>
+<hr>
+<h2 id="四、stride-from-through-by-函数学习"><a href="#四、stride-from-through-by-函数学习" class="headerlink" title="四、stride(from:through:by:) 函数学习"></a>四、stride(from:through:by:) 函数学习</h2><p><code>stride(from:through:by:)</code> 是 <code>Swift</code> 中用来生成一个数值序列的函数。它通过指定起始值、结束值和步长来创建一个有规律的数值序列。你可以使用它来创建一个范围内的数值集合，步长可以是正数也可以是负数。</p>
+<h3 id="函数签名："><a href="#函数签名：" class="headerlink" title="函数签名："></a>函数签名：</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">stride</span>(<span class="params">from</span> <span class="params">start</span>: <span class="type">T</span>, <span class="params">through</span> <span class="params">end</span>: <span class="type">T</span>, <span class="params">by</span> <span class="params">step</span>: <span class="type">T</span>) -&gt; <span class="type">StrideTo</span>&lt;<span class="type">T</span>&gt; <span class="keyword">where</span> <span class="type">T</span> : <span class="type">Strideable</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="参数说明："><a href="#参数说明：" class="headerlink" title="参数说明："></a>参数说明：</h3><ul>
+<li><code>from start: T</code>：起始值。</li>
+<li><code>through end: T</code>：结束值，序列会包含该值。</li>
+<li><code>by step: T</code>：步长值，用于确定数值递增或递减的幅度。</li>
+</ul>
+<h3 id="返回值："><a href="#返回值：" class="headerlink" title="返回值："></a>返回值：</h3><ul>
+<li>返回一个 <code>StrideTo&lt;T&gt;</code> 类型的序列，这个序列是一个步进的数值集合。</li>
+</ul>
+<h3 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h3><ol>
+<li><p><strong>正向步进（递增）</strong>：<br>生成从 0 到 10（包括 10）之间的数，步长为 2。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers <span class="operator">=</span> <span class="built_in">stride</span>(from: <span class="number">0</span>, through: <span class="number">10</span>, by: <span class="number">2</span>)</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers &#123;</span><br><span class="line">    <span class="built_in">print</span>(number)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>负向步进（递减）</strong>：<br>生成从 10 到 0（包括 0）之间的数，步长为 -2。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers <span class="operator">=</span> <span class="built_in">stride</span>(from: <span class="number">10</span>, through: <span class="number">0</span>, by: <span class="operator">-</span><span class="number">2</span>)</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers &#123;</span><br><span class="line">    <span class="built_in">print</span>(number)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">8</span><br><span class="line">6</span><br><span class="line">4</span><br><span class="line">2</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>通过 <code>...</code> 创建闭区间</strong>：<br><code>stride(from:through:by:)</code> 是一个闭区间（<code>through</code>），意味着它会包含结束值。</p>
+</li>
+</ol>
+<h3 id="使用场景："><a href="#使用场景：" class="headerlink" title="使用场景："></a>使用场景：</h3><p><code>stride</code> 适用于需要创建有规律的数值序列时，例如：</p>
+<ul>
+<li>生成均匀分布的数值（比如绘图时的坐标点）。</li>
+<li>处理循环或者需要指定步长的逻辑。</li>
+</ul>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p><code>stride(from:through:by:)</code> 函数是 <code>Swift</code> 提供的一个非常灵活的工具，可以用于生成带有特定步长的数值序列。它非常适合需要精确控制范围和步长的场景。</p>
+<hr>
+<hr>
+<h2 id="五、split-separator-maxSplits-omittingEmptySubsequences"><a href="#五、split-separator-maxSplits-omittingEmptySubsequences" class="headerlink" title="五、split(separator:maxSplits:omittingEmptySubsequences:)"></a>五、split(separator:maxSplits:omittingEmptySubsequences:)</h2><p>这个方法用来把一个字符串分割成多个子字符串（<code>[Substring]</code>），根据指定的“分隔符”来进行切割。</p>
+<h3 id="🧾-函数签名："><a href="#🧾-函数签名：" class="headerlink" title="🧾 函数签名："></a>🧾 函数签名：</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">split</span>(</span><br><span class="line">    <span class="params">separator</span>: <span class="type">Character</span>,</span><br><span class="line">    <span class="params">maxSplits</span>: <span class="type">Int</span> <span class="operator">=</span> .max,</span><br><span class="line">    <span class="params">omittingEmptySubsequences</span>: <span class="type">Bool</span> <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">) -&gt; [<span class="type">Substring</span>]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="📌-参数说明："><a href="#📌-参数说明：" class="headerlink" title="📌 参数说明："></a>📌 参数说明：</h3><ul>
+<li><code>separator</code>: 分隔符字符。字符串会按照这个字符进行拆分。</li>
+<li><code>maxSplits</code>: 最多分割多少次。默认是 <code>.max</code>，表示不限次数。</li>
+<li><code>omittingEmptySubsequences</code>: 是否忽略空的子串（如连续两个分隔符之间没有内容），默认是 <code>true</code>。</li>
+</ul>
+<hr>
+<h3 id="🔍-这个例子的解析："><a href="#🔍-这个例子的解析：" class="headerlink" title="🔍 这个例子的解析："></a>🔍 这个例子的解析：</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> components <span class="operator">=</span> content.split(separator: <span class="string">&quot;?&quot;</span>, maxSplits: <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>等价于：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> components <span class="operator">=</span> content.split(separator: <span class="string">&quot;?&quot;</span>, maxSplits: <span class="number">1</span>, omittingEmptySubsequences: <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>把 <code>content</code> 这个字符串按 <code>?</code> 分隔；</li>
+<li>最多分一次（只分一次，也就是得到两部分）；</li>
+<li>忽略空字符串（如果 <code>?</code> 在最开始或中间连续出现，不会保留空部分）。</li>
+</ul>
+<hr>
+<h3 id="🧪-示例："><a href="#🧪-示例：" class="headerlink" title="🧪 示例："></a>🧪 示例：</h3><h4 id="例-1：正常分割"><a href="#例-1：正常分割" class="headerlink" title="例 1：正常分割"></a>例 1：正常分割</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> content <span class="operator">=</span> <span class="string">&quot;abc?def?ghi&quot;</span></span><br><span class="line"><span class="keyword">let</span> parts <span class="operator">=</span> content.split(separator: <span class="string">&quot;?&quot;</span>, maxSplits: <span class="number">1</span>)</span><br><span class="line"><span class="comment">// parts = [&quot;abc&quot;, &quot;def?ghi&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>只分一次。第一次遇到 <code>?</code> 就切一刀，剩下的部分原样保留。</p>
+</blockquote>
+<hr>
+<h4 id="例-2：分割多次（默认值）"><a href="#例-2：分割多次（默认值）" class="headerlink" title="例 2：分割多次（默认值）"></a>例 2：分割多次（默认值）</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> content <span class="operator">=</span> <span class="string">&quot;a?b?c?d&quot;</span></span><br><span class="line"><span class="keyword">let</span> parts <span class="operator">=</span> content.split(separator: <span class="string">&quot;?&quot;</span>)</span><br><span class="line"><span class="comment">// parts = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>默认是 <code>maxSplits: .max</code>，会尽可能多地切。</p>
+</blockquote>
+<hr>
+<h4 id="例-3：保留空子串"><a href="#例-3：保留空子串" class="headerlink" title="例 3：保留空子串"></a>例 3：保留空子串</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> content <span class="operator">=</span> <span class="string">&quot;a??b&quot;</span></span><br><span class="line"><span class="keyword">let</span> parts <span class="operator">=</span> content.split(separator: <span class="string">&quot;?&quot;</span>, omittingEmptySubsequences: <span class="literal">false</span>)</span><br><span class="line"><span class="comment">// parts = [&quot;a&quot;, &quot;&quot;, &quot;b&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="🧠-总结记忆法："><a href="#🧠-总结记忆法：" class="headerlink" title="🧠 总结记忆法："></a>🧠 总结记忆法：</h3><ul>
+<li><code>split(separator:)</code> → 用某个字符拆字符串。</li>
+<li><code>maxSplits:</code> → 控制“最多切几刀”。</li>
+<li><code>omittingEmptySubsequences:</code> → 是否丢掉空的部分。</li>
+</ul>
+<hr>
+<hr>
+<h2 id="六、Swift-中使用-static"><a href="#六、Swift-中使用-static" class="headerlink" title="六、Swift 中使用 static"></a>六、Swift 中使用 static</h2><h3 id="在-Swift-中频繁使用-static-有什么问题？"><a href="#在-Swift-中频繁使用-static-有什么问题？" class="headerlink" title="在 Swift 中频繁使用 static 有什么问题？"></a>在 Swift 中频繁使用 <code>static</code> 有什么问题？</h3><p><code>static</code> 方法是<strong>类型方法</strong>，它们属于类型（<code>class</code>&#x2F;<code>struct</code>&#x2F;<code>enum</code>），而不属于某个实例对象。频繁使用 <code>static</code> 方法有一些 <strong>潜在问题</strong>：</p>
+<h3 id="❌-可能的问题"><a href="#❌-可能的问题" class="headerlink" title="❌ 可能的问题"></a>❌ 可能的问题</h3><ol>
+<li><p><strong>无法访问实例属性</strong></p>
+<ul>
+<li><code>static</code> 方法无法访问 <code>self</code> 或实例变量，这意味着<strong>所有需要实例数据的逻辑都不能放在 <code>static</code> 方法中</strong>。</li>
+<li>例如：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Example</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> name <span class="operator">=</span> <span class="string">&quot;Swift&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">printName</span>() &#123;</span><br><span class="line">        <span class="built_in">print</span>(name) <span class="comment">// ❌ 编译错误，不能访问实例属性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>解决方案</strong>：如果方法需要访问实例数据，就不应该使用 <code>static</code>，应该用<strong>实例方法</strong>。</li>
+</ul>
+</li>
+<li><p><strong>不适用于需要继承的情况</strong></p>
+<ul>
+<li><code>static</code> 方法<strong>不能被子类重写</strong>，而 <code>class func</code> 可以。</li>
+<li>例如：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">greet</span>() &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Hello from Parent&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Child</span>: <span class="title class_ inherited__">Parent</span> &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">greet</span>() &#123;  <span class="comment">// ❌ 报错，static 方法不能被 override</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Hello from Child&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>解决方案</strong>：<ul>
+<li>如果方法需要<strong>允许子类重写</strong>，请使用 <code>class func</code> 代替 <code>static func</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>容易导致全局状态污染</strong></p>
+<ul>
+<li><p>过多 <code>static</code> 方法会让类逐渐变成<strong>工具类（Utility Class）</strong>，但大部分时候，<strong>面向对象设计更鼓励使用实例方法</strong>。</p>
+</li>
+<li><p>例如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Utility</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">format</span>(<span class="params">date</span>: <span class="type">Date</span>) -&gt; <span class="type">String</span> &#123; <span class="operator">...</span> &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">log</span>(<span class="params">message</span>: <span class="type">String</span>) &#123; <span class="operator">...</span> &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">validateEmail</span>(<span class="keyword">_</span> <span class="params">email</span>: <span class="type">String</span>) -&gt; <span class="type">Bool</span> &#123; <span class="operator">...</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>问题</strong>：</p>
+<ul>
+<li>这些方法全是 <code>static</code>，导致 <code>Utility</code> 变成了一个<strong>全局工具类</strong>。</li>
+<li><strong>缺乏面向对象的封装性</strong>，无法在不同实例间存储状态。</li>
+<li><strong>难以扩展</strong>：如果需要不同的 <code>log</code> 级别、不同的 <code>date format</code>，就必须增加参数或新增方法，代码维护困难。</li>
+</ul>
+</li>
+<li><p><strong>解决方案</strong>：</p>
+<ul>
+<li><strong>如果方法属于特定的对象实例，尽量用实例方法</strong>。</li>
+<li><strong>如果方法需要继承，使用 <code>class func</code></strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="什么时候适合使用-static？"><a href="#什么时候适合使用-static？" class="headerlink" title="什么时候适合使用 static？"></a>什么时候适合使用 <code>static</code>？</h3><p>虽然 <code>static</code> 可能带来上述问题，但<strong>在以下场景中使用 <code>static</code> 是合适的</strong>：</p>
+<h4 id="✅-1-工具方法（Utility-Methods）"><a href="#✅-1-工具方法（Utility-Methods）" class="headerlink" title="✅ 1. 工具方法（Utility Methods）"></a>✅ 1. 工具方法（Utility Methods）</h4><ul>
+<li><strong>不依赖实例，不需要存储状态</strong> 的方法，适合用 <code>static</code>：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">MathUtil</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">square</span>(<span class="keyword">_</span> <span class="params">value</span>: <span class="type">Double</span>) -&gt; <span class="type">Double</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> value <span class="operator">*</span> value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result <span class="operator">=</span> <span class="type">MathUtil</span>.square(<span class="number">4</span>) <span class="comment">// ✅ 4 * 4 = 16</span></span><br></pre></td></tr></table></figure></li>
+<li><code>square(_:)</code> 方法不需要 <code>MathUtil</code> 的实例，因此 <code>static</code> 是合理的选择。</li>
+</ul>
+<h4 id="✅-2-单例模式"><a href="#✅-2-单例模式" class="headerlink" title="✅ 2. 单例模式"></a>✅ 2. 单例模式</h4><ul>
+<li><strong>全局唯一的实例</strong>，适合用 <code>static</code>：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Logger</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> shared <span class="operator">=</span> <span class="type">Logger</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">init</span>() &#123; &#125; <span class="comment">// 禁止外部创建实例</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">log</span>(<span class="keyword">_</span> <span class="params">message</span>: <span class="type">String</span>) &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[LOG]: <span class="subst">\(message)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Logger</span>.shared.log(<span class="string">&quot;App started&quot;</span>) <span class="comment">// ✅ 访问单例对象</span></span><br></pre></td></tr></table></figure></li>
+<li><code>static let shared</code> 确保 <code>Logger</code> 只有一个实例（单例模式）。</li>
+<li>这里 <code>log(_:)</code> 是 <strong>实例方法</strong>，因为它可能需要维护日志级别等状态。</li>
+</ul>
+<h4 id="✅-3-枚举中的静态常量"><a href="#✅-3-枚举中的静态常量" class="headerlink" title="✅ 3. 枚举中的静态常量"></a>✅ 3. 枚举中的静态常量</h4><ul>
+<li><code>static</code> 适用于 <strong>枚举中定义常量</strong>：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">API</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> baseURL <span class="operator">=</span> <span class="string">&quot;https://api.example.com&quot;</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">let</span> timeout <span class="operator">=</span> <span class="number">30.0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> url <span class="operator">=</span> <span class="type">API</span>.baseURL <span class="comment">// ✅</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>避免用 <code>case</code> 表示常量</strong>，因为 <code>case</code> 主要用于枚举值。</li>
+</ul>
+<h4 id="✅-4-类型级计算属性"><a href="#✅-4-类型级计算属性" class="headerlink" title="✅ 4. 类型级计算属性"></a>✅ 4. 类型级计算属性</h4><ul>
+<li><code>static</code> 可以用于 <strong>全局不可变的数据</strong>：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Configuration</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">var</span> defaultTimeout: <span class="type">TimeInterval</span> <span class="operator">=</span> <span class="number">60.0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Configuration</span>.defaultTimeout) <span class="comment">// ✅ 60.0</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>注意</strong>：如果可能改变，考虑 <code>class var</code>，这样子类可以重写：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BaseConfig</span> &#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="keyword">var</span> defaultTimeout: <span class="type">TimeInterval</span> &#123; <span class="keyword">return</span> <span class="number">60.0</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomConfig</span>: <span class="title class_ inherited__">BaseConfig</span> &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">class</span> <span class="keyword">var</span> defaultTimeout: <span class="type">TimeInterval</span> &#123; <span class="keyword">return</span> <span class="number">120.0</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="✅-5-static-作为工厂方法"><a href="#✅-5-static-作为工厂方法" class="headerlink" title="✅ 5. static 作为工厂方法"></a>✅ 5. <code>static</code> 作为工厂方法</h4><ul>
+<li><strong>如果创建对象需要特殊逻辑</strong>，可以用 <code>static func</code>：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> name: <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">createGuestUser</span>() -&gt; <span class="type">User</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">User</span>(name: <span class="string">&quot;Guest&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> guest <span class="operator">=</span> <span class="type">User</span>.createGuestUser() <span class="comment">// ✅</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>相比 <code>init()</code> 方法，工厂方法可以定制创建逻辑</strong>。</li>
+</ul>
+<hr>
+<h3 id="什么时候不适合用-static？"><a href="#什么时候不适合用-static？" class="headerlink" title="什么时候不适合用 static？"></a>什么时候不适合用 <code>static</code>？</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th><code>static</code> 适合？</th>
+<th>推荐做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需要访问实例属性</td>
+<td>❌ 不适合</td>
+<td>用实例方法</td>
+</tr>
+<tr>
+<td>可能需要被子类重写</td>
+<td>❌ 不适合</td>
+<td>用 <code>class func</code></td>
+</tr>
+<tr>
+<td>可能存储状态</td>
+<td>❌ 不适合</td>
+<td>用实例方法</td>
+</tr>
+<tr>
+<td>需要创建对象（工厂方法）</td>
+<td>✅ 适合</td>
+<td>可用 <code>static func</code></td>
+</tr>
+<tr>
+<td>纯工具方法</td>
+<td>✅ 适合</td>
+<td>可用 <code>static func</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="代码如何优化？"><a href="#代码如何优化？" class="headerlink" title="代码如何优化？"></a>代码如何优化？</h3><p>在 <code>ReportConfigModel</code> 里，频繁使用 <code>static</code>，但它们大部分是<strong>不依赖实例的数据解析逻辑</strong>，所以**<code>static</code> 是合适的**。</p>
+<p>✅ 但如果以后 <code>booleanValue</code> 需要<strong>根据实例的设定解析数据</strong>，建议改成实例方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">booleanValue</span>(<span class="params">forKey</span> <span class="params">key</span>: <span class="type">String</span>, <span class="params">in</span> <span class="params">dictionary</span>: <span class="type">NSDictionary</span>) -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">    (dictionary[key] <span class="keyword">as?</span> <span class="type">Bool</span>) <span class="operator">??</span> ((dictionary[key] <span class="keyword">as?</span> <span class="type">String</span>)<span class="operator">?</span>.lowercased() <span class="operator">==</span> <span class="string">&quot;true&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样<strong>更灵活，避免滥用 <code>static</code></strong>。</p>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p><strong>适合 <code>static</code> 的场景</strong>：</p>
+<ul>
+<li><strong>工具方法</strong>（不需要实例状态）。</li>
+<li><strong>全局常量</strong>（如 API 地址）。</li>
+<li><strong>单例模式</strong>（如 <code>Logger.shared</code>）。</li>
+<li><strong>类型级计算属性</strong>（如 <code>Configuration.defaultTimeout</code>）。</li>
+<li><strong>工厂方法</strong>（如 <code>User.createGuestUser()</code>）。</li>
+</ul>
+</li>
+<li><p><strong>不适合 <code>static</code> 的场景</strong>：</p>
+<ul>
+<li><strong>方法依赖实例数据</strong>，应使用<strong>实例方法</strong>。</li>
+<li><strong>方法可能需要被子类重写</strong>，应使用 <code>class func</code>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>✅ 结论：</strong><br>在 <code>ReportConfigModel</code> 里，<code>booleanValue</code> 目前是工具方法，<strong>用 <code>static</code> 没问题</strong>。<br>但如果未来它需要访问 <code>self</code>，就应该改成实例方法。<strong>合理使用 <code>static</code>，避免让代码变成全是工具函数的“过程式编程”</strong>。</p>
+<hr>
+<hr>
+<h2 id="七、数字系统及其转换"><a href="#七、数字系统及其转换" class="headerlink" title="七、数字系统及其转换"></a>七、数字系统及其转换</h2><h4 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1 基本概念"></a>1 基本概念</h4><ul>
+<li><p><strong>二进制（Binary）</strong>  </p>
+<ul>
+<li><strong>定义</strong>：使用 <code>0</code> 和 <code>1</code> 两个数字表示信息，是计算机内部的基本数制（基数为 <code>2</code>）。  </li>
+<li><strong>应用</strong>：所有计算机数据最终都以二进制形式存储和运算。</li>
+</ul>
+</li>
+<li><p><strong>十进制（Decimal）</strong>  </p>
+<ul>
+<li><strong>定义</strong>：我们日常生活中使用的数字系统，基数为 <code>10</code>，由 <code>0～9</code> 十个数字组成。  </li>
+<li><strong>应用</strong>：人类最直观的数制，用于计算和计量。</li>
+</ul>
+</li>
+<li><p><strong>十六进制（Hexadecimal）</strong>  </p>
+<ul>
+<li><strong>定义</strong>：一种基数为 <code>16</code> 的数制，使用 <code>0～9</code> 和 <code>A～F</code>（代表 <code>10～15</code>）来表示。  </li>
+<li><strong>应用</strong>：在计算机系统中常用来表示内存地址、颜色值、以及底层硬件接口数据，因为它可以更紧凑地表示二进制数据（每 <code>1</code> 个十六进制数字等于 <code>4</code> 个二进制位）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-数字转换方法"><a href="#2-数字转换方法" class="headerlink" title="2 数字转换方法"></a>2 数字转换方法</h4><ul>
+<li><p><strong>二进制 ⇔ 十进制</strong>  </p>
+<ul>
+<li><strong>二进制转十进制</strong>：对二进制数的每一位，乘以相应的 <code>2</code> 的幂次方再求和。<br>例如，二进制 <code>1011 = 1×2³ + 0×2² + 1×2¹ + 1×2⁰ = 8 + 0 + 2 + 1 = 11</code>。  </li>
+<li><strong>十进制转二进制</strong>：将十进制数不断除以 <code>2</code>，记录余数，再将余数倒序排列。<br>例如，<code>11 ÷ 2 = 5 余 1，5 ÷ 2 = 2 余 1，2 ÷ 2 = 1 余 0，1 ÷ 2 = 0 余 1，倒序得到 1011</code>。</li>
+</ul>
+</li>
+<li><p><strong>十进制 ⇔ 十六进制</strong>  </p>
+<ul>
+<li><strong>十进制转十六进制</strong>：将十进制数不断除以 <code>16</code>，记录余数（<code>10～15</code> 分别用 <code>A～F</code> 表示），余数倒序排列。<br>例如，<code>255 ÷ 16 = 15 余 15（F），15 ÷ 16 = 0 余 15（F），得到 FF</code>。  </li>
+<li><strong>十六进制转十进制</strong>：对每一位乘以 <code>16</code> 的幂次方再求和。<br>例如，<code>FF = 15×16¹ + 15×16⁰ = 240 + 15 = 255</code>。</li>
+</ul>
+</li>
+<li><p><strong>二进制 ⇔ 十六进制</strong>  </p>
+<ul>
+<li>每 <code>4</code> 个二进制位对应 <code>1</code> 个十六进制位。例如，二进制 <code>1011 1100 分成 1011（B）和 1100（C），即十六进制 BC</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-应用场景"><a href="#3-应用场景" class="headerlink" title="3 应用场景"></a>3 应用场景</h4><ul>
+<li><strong>硬件接口</strong>：很多低层设备接口返回的是十六进制数据，使用十六进制便于阅读和调试。  </li>
+<li><strong>调试输出</strong>：在调试工具中，经常需要将二进制数据以十六进制格式显示，便于快速定位问题。  </li>
+<li><strong>数据存储和传输</strong>：序列化数据时，将内部数据转换为文本格式（如 <code>JSON</code>）时，使用 <code>Codable</code> 可以自动处理枚举的 <code>raw value</code>。</li>
+</ul>
+<hr>
+<hr>
+<h2 id="八、Xcode-调试工具：LLDB、Console-和-OSLog"><a href="#八、Xcode-调试工具：LLDB、Console-和-OSLog" class="headerlink" title="八、Xcode 调试工具：LLDB、Console 和 OSLog"></a>八、Xcode 调试工具：LLDB、Console 和 OSLog</h2><h4 id="1-LLDB"><a href="#1-LLDB" class="headerlink" title="1 LLDB"></a>1 LLDB</h4><ul>
+<li><strong>概念</strong>：<br><code>LLDB</code> 是 <code>Xcode</code> 使用的调试器，用于设置断点、检查变量、跟踪函数调用等调试操作。</li>
+<li><strong>用途</strong>：  <ul>
+<li><strong>设置断点</strong>：在代码中暂停执行，检查内存、变量状态等。</li>
+<li><strong>命令行调试</strong>：通过 <code>LLDB</code> 命令（如 <code>po</code>、<code>bt</code>）查看对象、打印堆栈信息等。</li>
+</ul>
+</li>
+<li><strong>使用方法</strong>：  <ul>
+<li>在 <code>Xcode</code> 中点击代码行号设置断点；  </li>
+<li>在调试控制台中输入 <code>LLDB</code> 命令，例如：<ul>
+<li><code>po someVariable</code>（打印变量描述）  </li>
+<li><code>breakpoint set --name functionName</code>（设置断点）  </li>
+<li><code>thread backtrace</code>（查看调用堆栈）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-Console"><a href="#2-Console" class="headerlink" title="2 Console"></a>2 Console</h4><ul>
+<li><strong>概念</strong>：<br><code>macOS</code> 的 <code>Console</code> 应用用于查看系统日志和应用日志。  </li>
+<li><strong>用途</strong>：  <ul>
+<li>查看 <code>Xcode</code>、系统和应用产生的日志信息。  </li>
+<li>过滤日志、搜索特定关键字，帮助调试问题。</li>
+</ul>
+</li>
+<li><strong>使用方法</strong>：  <ul>
+<li>打开 <code>macOS</code> 的 <code>Console</code> 应用；  </li>
+<li>在搜索栏中输入相关关键字（例如项目的子系统名称、进程名称等）；  </li>
+<li>观察日志中是否有异常信息或错误提示。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-OSLog"><a href="#3-OSLog" class="headerlink" title="3 OSLog"></a>3 OSLog</h4><ul>
+<li><strong>概念</strong>：<br><code>OSLog</code> 是苹果提供的新型日志系统，支持结构化日志记录。  </li>
+<li><strong>用途</strong>：  <ul>
+<li>用于在代码中记录调试、信息、错误日志；  </li>
+<li>支持高性能日志写入，并可通过 <code>Console</code> 或 <code>OSLogStore API</code> 进行查询。</li>
+</ul>
+</li>
+<li><strong>使用方法</strong>：  <ul>
+<li>在代码中通过 <code>Logger</code> 类记录日志，例如：<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> logger <span class="operator">=</span> <span class="type">Logger</span>(subsystem: <span class="string">&quot;com.example.myapp&quot;</span>, category: <span class="string">&quot;network&quot;</span>)</span><br><span class="line">logger.info(<span class="string">&quot;Network request started&quot;</span>)</span><br><span class="line">logger.error(<span class="string">&quot;Network error: <span class="subst">\(error.localizedDescription)</span>&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li>在 <code>Console</code> 应用中查看日志，或者使用 <code>OSLogStore API</code> 导出日志。</li>
+</ul>
+</li>
+</ul>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tuberose621.github.io">葛聪颖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tuberose621.github.io/2025/05/07/Swift%20%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/">https://tuberose621.github.io/2025/05/07/Swift%20%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tuberose621.github.io" target="_blank">技术成长笔记</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Swift/">Swift</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/05/07/Time%20Profiler%20%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" title="Time Profiler 性能分析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Time Profiler 性能分析</div></div><div class="info-2"><div class="info-item-1">1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253541.59 s   15.4%	1.31 s	 	    closure #6 in LineChartView.generateSingleLineChart(from:)579.00 ms    5.6%	490.00 ms	 	    closure #6 in LineChartView.generateGroupLineChart(from:)524.00 ms    5.0%	423.00 ms	 	    closure #1 in closure #4 in LineChartView.generateLineChart(from:)269.00 ms    2.6%	221.00 ms	 	    closure #1 in closure #6 in LineChartView.generateOtherLineChart(from:)92.00 ms   ...</div></div></div></a><a class="pagination-related" href="/2025/05/07/Swift%20%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-Task%20%E5%92%8C%20async-await%20/" title="Swift 中的函数式编程以及 Task 和 async/await 的使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Swift 中的函数式编程以及 Task 和 async/await 的使用</div></div><div class="info-2"><div class="info-item-1">一、函数式编程风格在下面的代码中： 123456let entries = try store    .getEntries(at: position)    .compactMap &#123; $0 as? OSLogEntryLog &#125;    .filter &#123; $0.subsystem == Bundle.main.bundleIdentifier! &#125;    .filter &#123; $0.date &gt;= date &#125;    .map &#123; &quot;[\(self.dateFormatter.string(from: $0.date))][\((OSLogLevel(rawValue: $0.level.rawValue) ?? .undefined).title)][\($0.category)] \($0.composedMessage)&quot; &#125;  compactMap：将集合中每个元素转换为某类型，如果转换失败则过滤掉 nil。   filter：筛选集合中满足条件的元素。 ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">葛聪颖</div><div class="author-info-description">记录 iOS 架构设计、组件化实践、AI 工具探索与技术成长</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Main-Actor-%E9%9A%94%E7%A6%BB"><span class="toc-number">1.</span> <span class="toc-text">一、Main Actor 隔离</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">⚠️ 原因分析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">✅ 解决方案：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%9C%A8%E4%B8%BB%E7%BA%BF%E7%A8%8B%E4%B8%AD%E8%AE%BE%E7%BD%AE-isIdleTimerDisabled"><span class="toc-number">1.2.1.</span> <span class="toc-text">方法一：在主线程中设置 isIdleTimerDisabled</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E6%8A%8A-UIApplication-shared-isIdleTimerDisabled-true-%E6%94%BE%E5%88%B0-onAppear-%E6%88%96-DispatchQueue-main-async-%E4%B8%AD"><span class="toc-number">1.2.2.</span> <span class="toc-text">方法二：把 UIApplication.shared.isIdleTimerDisabled &#x3D; true 放到 .onAppear 或 DispatchQueue.main.async 中</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.3.</span> <span class="toc-text">✅ 总结建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%A7%A3%E9%87%8A%EF%BC%9A-MainActor-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">一、先解释：@MainActor 是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%91%89-%E5%AE%83%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9A"><span class="toc-number">1.4.1.</span> <span class="toc-text">👉 它的作用：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E8%80%97%E6%97%B6%E6%93%8D%E4%BD%9C%E9%98%BB%E5%A1%9E%E4%B8%BB%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.4.2.</span> <span class="toc-text">同步耗时操作阻塞主线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%8D-%E5%85%B7%E4%BD%93%E5%BD%B1%E5%93%8D%E8%B7%AF%E5%BE%84%EF%BC%9A"><span class="toc-number">1.4.3.</span> <span class="toc-text">🔍 具体影响路径：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-1-init-%E6%96%B9%E6%B3%95%E4%B8%80%E8%88%AC%E7%94%A8%E6%9D%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">✅ 1. init() 方法一般用来做什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%92%A1-init-%E7%9A%84%E6%9C%AC%E8%B4%A8%E8%81%8C%E8%B4%A3%EF%BC%9A"><span class="toc-number">1.5.1.</span> <span class="toc-text">💡 init() 的本质职责：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%97%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.5.2.</span> <span class="toc-text">❗为什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-%E5%90%88%E7%90%86%E7%9A%84-init-%E7%94%A8%E6%B3%95-%E2%9C%85"><span class="toc-number">1.5.3.</span> <span class="toc-text">✅ 合理的 init() 用法 ✅</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-%E4%B8%8D%E6%8E%A8%E8%8D%90%E7%9A%84-init-%E8%A1%8C%E4%B8%BA-%E2%9D%8C"><span class="toc-number">1.5.4.</span> <span class="toc-text">❌ 不推荐的 init() 行为 ❌</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-2-%E9%82%A3%E8%80%97%E6%97%B6%E6%88%96%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%94%BE%E5%9C%A8%E5%93%AA%E6%9B%B4%E5%90%88%E9%80%82%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">🧠 2. 那耗时或异步操作放在哪更合适？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81private-set-%E5%92%8C-didSet"><span class="toc-number">2.</span> <span class="toc-text">二、private(set) 和  didSet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90"><span class="toc-number">2.1.</span> <span class="toc-text">完整语法结构分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-private-set-%EF%BC%9A%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. private(set)：访问权限控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-var-currentSession-MySession"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. var currentSession: MySession?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-didSet-%E6%98%AF%E5%B1%9E%E6%80%A7%E8%A7%82%E5%AF%9F%E5%99%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">3. didSet 是属性观察器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-if-let-currentSession-%E6%98%AF-%E7%AE%80%E5%8C%96%E7%89%88%E7%9A%84-Optional-Binding"><span class="toc-number">2.2.</span> <span class="toc-text">4. if let currentSession 是 简化版的 Optional Binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-didSet-%E5%86%85%E7%9A%84%E9%80%BB%E8%BE%91%E8%AF%B4%E6%98%8E"><span class="toc-number">2.3.</span> <span class="toc-text">5. didSet 内的逻辑说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E5%B0%8F%E7%BB%93%EF%BC%9A%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E2%80%9C%E7%8A%B6%E6%80%81%E5%B1%9E%E6%80%A7-%E8%A7%82%E5%AF%9F%E5%99%A8-%E5%B0%81%E8%A3%85%E5%86%99%E6%9D%83%E9%99%90%E2%80%9D%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">📌 小结：这是一个“状态属性 + 观察器 + 封装写权限”的典型用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9A-%E5%8F%AF%E5%80%9F%E9%89%B4%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">3.1.</span> <span class="toc-text">📚 可借鉴的场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%B2%E8%A1%8C%E9%98%9F%E5%88%97-DispatchQueue"><span class="toc-number">4.</span> <span class="toc-text">三、串行队列 DispatchQueue</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%EF%BC%9A"><span class="toc-number">4.1.</span> <span class="toc-text">解释：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81stride-from-through-by-%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0"><span class="toc-number">5.</span> <span class="toc-text">四、stride(from:through:by:) 函数学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%AD%BE%E5%90%8D%EF%BC%9A"><span class="toc-number">5.1.</span> <span class="toc-text">函数签名：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E%EF%BC%9A"><span class="toc-number">5.2.</span> <span class="toc-text">参数说明：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC%EF%BC%9A"><span class="toc-number">5.3.</span> <span class="toc-text">返回值：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-number">5.4.</span> <span class="toc-text">示例代码：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="toc-number">5.5.</span> <span class="toc-text">使用场景：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">5.6.</span> <span class="toc-text">总结：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81split-separator-maxSplits-omittingEmptySubsequences"><span class="toc-number">6.</span> <span class="toc-text">五、split(separator:maxSplits:omittingEmptySubsequences:)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%BE-%E5%87%BD%E6%95%B0%E7%AD%BE%E5%90%8D%EF%BC%9A"><span class="toc-number">6.1.</span> <span class="toc-text">🧾 函数签名：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%8C-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E%EF%BC%9A"><span class="toc-number">6.2.</span> <span class="toc-text">📌 参数说明：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E8%BF%99%E4%B8%AA%E4%BE%8B%E5%AD%90%E7%9A%84%E8%A7%A3%E6%9E%90%EF%BC%9A"><span class="toc-number">6.3.</span> <span class="toc-text">🔍 这个例子的解析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AA-%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-number">6.4.</span> <span class="toc-text">🧪 示例：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-1%EF%BC%9A%E6%AD%A3%E5%B8%B8%E5%88%86%E5%89%B2"><span class="toc-number">6.4.1.</span> <span class="toc-text">例 1：正常分割</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-2%EF%BC%9A%E5%88%86%E5%89%B2%E5%A4%9A%E6%AC%A1%EF%BC%88%E9%BB%98%E8%AE%A4%E5%80%BC%EF%BC%89"><span class="toc-number">6.4.2.</span> <span class="toc-text">例 2：分割多次（默认值）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-3%EF%BC%9A%E4%BF%9D%E7%95%99%E7%A9%BA%E5%AD%90%E4%B8%B2"><span class="toc-number">6.4.3.</span> <span class="toc-text">例 3：保留空子串</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E6%80%BB%E7%BB%93%E8%AE%B0%E5%BF%86%E6%B3%95%EF%BC%9A"><span class="toc-number">6.5.</span> <span class="toc-text">🧠 总结记忆法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Swift-%E4%B8%AD%E4%BD%BF%E7%94%A8-static"><span class="toc-number">7.</span> <span class="toc-text">六、Swift 中使用 static</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-Swift-%E4%B8%AD%E9%A2%91%E7%B9%81%E4%BD%BF%E7%94%A8-static-%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">7.1.</span> <span class="toc-text">在 Swift 中频繁使用 static 有什么问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9D%8C-%E5%8F%AF%E8%83%BD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">7.2.</span> <span class="toc-text">❌ 可能的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%80%82%E5%90%88%E4%BD%BF%E7%94%A8-static%EF%BC%9F"><span class="toc-number">7.3.</span> <span class="toc-text">什么时候适合使用 static？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-1-%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95%EF%BC%88Utility-Methods%EF%BC%89"><span class="toc-number">7.3.1.</span> <span class="toc-text">✅ 1. 工具方法（Utility Methods）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-2-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.3.2.</span> <span class="toc-text">✅ 2. 单例模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-3-%E6%9E%9A%E4%B8%BE%E4%B8%AD%E7%9A%84%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F"><span class="toc-number">7.3.3.</span> <span class="toc-text">✅ 3. 枚举中的静态常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-4-%E7%B1%BB%E5%9E%8B%E7%BA%A7%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7"><span class="toc-number">7.3.4.</span> <span class="toc-text">✅ 4. 类型级计算属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-5-static-%E4%BD%9C%E4%B8%BA%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95"><span class="toc-number">7.3.5.</span> <span class="toc-text">✅ 5. static 作为工厂方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E9%80%82%E5%90%88%E7%94%A8-static%EF%BC%9F"><span class="toc-number">7.4.</span> <span class="toc-text">什么时候不适合用 static？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%EF%BC%9F"><span class="toc-number">7.5.</span> <span class="toc-text">代码如何优化？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.6.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E5%8F%8A%E5%85%B6%E8%BD%AC%E6%8D%A2"><span class="toc-number">8.</span> <span class="toc-text">七、数字系统及其转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">8.0.1.</span> <span class="toc-text">1 基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%95%B0%E5%AD%97%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95"><span class="toc-number">8.0.2.</span> <span class="toc-text">2 数字转换方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">8.0.3.</span> <span class="toc-text">3 应用场景</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81Xcode-%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%EF%BC%9ALLDB%E3%80%81Console-%E5%92%8C-OSLog"><span class="toc-number">9.</span> <span class="toc-text">八、Xcode 调试工具：LLDB、Console 和 OSLog</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-LLDB"><span class="toc-number">9.0.1.</span> <span class="toc-text">1 LLDB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Console"><span class="toc-number">9.0.2.</span> <span class="toc-text">2 Console</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-OSLog"><span class="toc-number">9.0.3.</span> <span class="toc-text">3 OSLog</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/MCP-%E4%B8%8E-Vibe-Coding/" title="MCP 与 Vibe Coding">MCP 与 Vibe Coding</a><time datetime="2025-06-06T12:18:27.000Z" title="发表于 2025-06-06 20:18:27">2025-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/RN-%E4%B8%8D%E6%98%AF-Webview/" title="RN 不是 Webview">RN 不是 Webview</a><time datetime="2025-06-06T10:54:43.000Z" title="发表于 2025-06-06 18:54:43">2025-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/%E6%BC%82%E4%BA%AE%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8D%8F%E8%AE%AE/" title="漂亮的使用协议">漂亮的使用协议</a><time datetime="2025-06-06T10:06:15.000Z" title="发表于 2025-06-06 18:06:15">2025-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/07/SwiftUI%20%E5%AD%A6%E4%B9%A0/" title="SwiftUI 学习">SwiftUI 学习</a><time datetime="2025-05-07T10:05:15.000Z" title="发表于 2025-05-07 18:05:15">2025-05-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/07/Swift%20%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-Task%20%E5%92%8C%20async-await%20/" title="Swift 中的函数式编程以及 Task 和 async/await 的使用">Swift 中的函数式编程以及 Task 和 async/await 的使用</a><time datetime="2025-05-07T10:04:15.000Z" title="发表于 2025-05-07 18:04:15">2025-05-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 葛聪颖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

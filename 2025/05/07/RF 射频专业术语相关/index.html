@@ -1,0 +1,550 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RF 射频专业术语相关 | 技术成长笔记</title><meta name="author" content="葛聪颖"><meta name="copyright" content="葛聪颖"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.RF 射频（Radio frequency） 射频又称无线电频率、无线射频、高周波，为在 3kHz 至 300GHz 这个范围内的振荡频率，这个频率相当于无线电波的频率，以及携带著无线电信号的交流电的频率。  在国际电信联盟定义的无线电频率划分当中：  甚低频（VLF）：3kHz~&#96;30kHz&#96; 低频（LF）：30kHz~&#96;300kHz&#96; 中频（MF）：300k">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RF 射频专业术语相关">
+<meta property="og:url" content="https://tuberose621.github.io/2025/05/07/RF%20%E5%B0%84%E9%A2%91%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD%E7%9B%B8%E5%85%B3/index.html">
+<meta property="og:site_name" content="技术成长笔记">
+<meta property="og:description" content="1.RF 射频（Radio frequency） 射频又称无线电频率、无线射频、高周波，为在 3kHz 至 300GHz 这个范围内的振荡频率，这个频率相当于无线电波的频率，以及携带著无线电信号的交流电的频率。  在国际电信联盟定义的无线电频率划分当中：  甚低频（VLF）：3kHz~&#96;30kHz&#96; 低频（LF）：30kHz~&#96;300kHz&#96; 中频（MF）：300k">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuberose621.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-05-07T10:00:15.000Z">
+<meta property="article:modified_time" content="2025-06-07T08:31:51.732Z">
+<meta property="article:author" content="葛聪颖">
+<meta property="article:tag" content="RF 射频">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuberose621.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RF 射频专业术语相关",
+  "url": "https://tuberose621.github.io/2025/05/07/RF%20%E5%B0%84%E9%A2%91%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD%E7%9B%B8%E5%85%B3/",
+  "image": "https://tuberose621.github.io/img/butterfly-icon.png",
+  "datePublished": "2025-05-07T10:00:15.000Z",
+  "dateModified": "2025-06-07T08:31:51.732Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "葛聪颖",
+      "url": "https://tuberose621.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tuberose621.github.io/2025/05/07/RF%20%E5%B0%84%E9%A2%91%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD%E7%9B%B8%E5%85%B3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RF 射频专业术语相关',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /><meta http-equiv="Pragma" content="no-cache" /><meta http-equiv="Expires" content="0" /><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">技术成长笔记</span></a><a class="nav-page-title" href="/"><span class="site-name">RF 射频专业术语相关</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">RF 射频专业术语相关</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-07T10:00:15.000Z" title="发表于 2025-05-07 18:00:15">2025-05-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-07T08:31:51.732Z" title="更新于 2025-06-07 16:31:51">2025-06-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h4 id="1-RF-射频（Radio-frequency）"><a href="#1-RF-射频（Radio-frequency）" class="headerlink" title="1.RF 射频（Radio frequency）"></a>1.RF 射频（Radio frequency）</h4><ul>
+<li><p><strong>射频又称无线电频率、无线射频、高周波，为在 <code>3kHz</code> 至 <code>300GHz</code> 这个范围内的振荡频率，这个频率相当于无线电波的频率，以及携带著无线电信号的交流电的频率。</strong></p>
+</li>
+<li><p><strong>在国际电信联盟定义的无线电频率划分当中</strong>：</p>
+<ul>
+<li><strong>甚低频（VLF）</strong>：<code>3kHz</code>~&#96;30kHz&#96;</li>
+<li><strong>低频（LF）</strong>：<code>30kHz</code>~&#96;300kHz&#96;</li>
+<li><strong>中频（MF）</strong>：<code>300kHz</code>~&#96;3000kHz&#96;</li>
+<li><strong>高频（HF）</strong>：<code>3MHz</code>~&#96;30MHz&#96;</li>
+<li><strong>甚高频（VHF）</strong>：<code>30MHz</code>~&#96;300MHz&#96;</li>
+<li><strong>特高频（UHF）</strong>：<code>300MHz</code>~&#96;3000MHz&#96;</li>
+<li><strong>超高频（SHF）</strong>：<code>3GHz</code>~&#96;30GHz&#96;</li>
+<li><strong>极高频（EHF）</strong>：<code>30GHz</code>~&#96;300GHz&#96;</li>
+</ul>
+</li>
+<li><p>手机跟基站之间是通过<strong>无线电波</strong>（射频）通信的，信号强弱直接影响通信质量。</p>
+</li>
+<li><p>主要关注<strong>手机侧射频性能</strong>，包括信号接收、发射功率、频段、信号质量等。</p>
+</li>
+</ul>
+<hr>
+<h4 id="2-Mode、芯片"><a href="#2-Mode、芯片" class="headerlink" title="2. Mode、芯片"></a>2. Mode、芯片</h4><ul>
+<li><strong>Mode</strong>：指通信模式，比如 <code>LTE Mode</code>（4G模式）、<code>NR Mode</code>（5G模式）、<code>GSM Mode</code>（2G模式）等。</li>
+<li><strong>芯片</strong>：手机里的<strong>基带芯片</strong>（如<strong>高通</strong>、<strong>联发科</strong>），负责无线通信，接管信号收发、协议处理。</li>
+<li>App要能获取<strong>当前手机的工作Mode和芯片信息</strong>，知道是<strong>哪个模式</strong>、<strong>哪个频段</strong>、<strong>哪个运营商</strong>。</li>
+</ul>
+<hr>
+<h4 id="3-无线通信与射频测试相关知识基本概念"><a href="#3-无线通信与射频测试相关知识基本概念" class="headerlink" title="3. 无线通信与射频测试相关知识基本概念"></a>3. 无线通信与射频测试相关知识基本概念</h4><ul>
+<li><strong>移动通信技术标准</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>英文全称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>全球移动通信系统(GSM)</strong></td>
+<td><strong>Code Division Multiple Access</strong></td>
+<td>广泛应用于<code>2G</code>网络。</td>
+</tr>
+<tr>
+<td><strong>码分多址(CDMA)</strong></td>
+<td><strong>Code Division Multiple Access</strong></td>
+<td>主要用于某些运营商的<code>2G/3G</code>网络。</td>
+</tr>
+<tr>
+<td><strong>宽带码分多址(WCDMA)</strong></td>
+<td><strong>Wideband Code Division Multiple Access</strong></td>
+<td>宽带CDMA，用于<code>3G</code>网络，支持更高的数据速率。</td>
+</tr>
+<tr>
+<td><strong>LTE</strong></td>
+<td><strong>Long Term Evolution</strong></td>
+<td><code>3G</code>到<code>4G</code>的演进技术，它较<code>3G</code>技术先进的地方是引入了<code>OFDM</code>（正交频分复用）和<code>MIMO</code>（多输入多输出）技术。并不严格的讲，<code>LTE</code>就是第四代（<code>4G</code>）移动通信系统。提供高速数据传输和低延迟，是当前主流网络技术之一。 采用 <code>OFDMA</code>（下行）和 <code>SC-FDMA</code>（上行）进行多用户调度。架构（<code>eNodeB</code>、<code>EPC</code>）、关键指标（带宽、时延、数据速率）</td>
+</tr>
+<tr>
+<td><strong>5G NR Sub6</strong></td>
+<td><strong>5G New Radio</strong></td>
+<td><code>5G</code> 新无线（<code>NR</code>）在 <code>Sub-6 GHz</code> 频段的部署，具有较好的覆盖和数据速率，是<code>5G</code>网络的重要组成部分。架构（<code>gNodeB</code>、<code>5GC</code>）、关键指标（子载波间隔、带宽、低时延、大连接数等）</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>无线通信相关知识</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>英文全称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>被测器件(DUT)</strong></td>
+<td><strong>Device Under Test</strong></td>
+<td>待测试模块。被测装置，又称在测单元或被测部件（<code>unit under test，UUT</code>），常用于表示正处于测试阶段的工业产品。</td>
+</tr>
+<tr>
+<td><strong>载波</strong></td>
+<td><strong>Carrier</strong></td>
+<td><code>1.</code>在无线通信中，载波是一种固定频率的连续波，用于承载信息。<code>2.</code>调制信号时，将信息叠加到载波上；接收端则从载波中提取原始信息。<code>3.</code>频率通常以赫兹（<code>Hz</code>）、千赫（<code>kHz</code>）、兆赫（<code>MHz</code>）或吉赫（<code>GHz</code>）表示。</td>
+</tr>
+<tr>
+<td><strong>载波聚合(CA)</strong></td>
+<td><strong>Carrier Aggregation</strong></td>
+<td>将多个频段或载波聚合在一起，从而增加可用的传输带宽，提高数据速率。一个 <code>LTE</code> 设备可能同时利用 <code>10 MHz</code> 和 <code>20 MHz</code> 的两个载波，实现合并后的 <code>30 MHz</code> 带宽，以达到更高的数据传输速率。</td>
+</tr>
+<tr>
+<td><strong>双连接(DC)</strong></td>
+<td><strong>Dual Connectivity</strong></td>
+<td>设备同时连接两个不同的无线技术，例如一个主载波使用 <code>LTE</code>（通常作为 <code>PCC</code>），同时通过辅载波使用 <code>5G NR</code>（作为 <code>SCC</code>），从而实现更高性能和更稳定的连接。一部手机在弱 <code>5G</code> 信号区域，通过同时连接 <code>LTE</code> 和 <code>5G NR</code>，可以在保持稳定连接的同时享受 <code>5G</code> 的高速率。</td>
+</tr>
+<tr>
+<td><strong>主载波(PCC)</strong></td>
+<td><strong>Primary Component Carrier</strong></td>
+<td>在 <code>Carrier Aggregation</code> 或双连接<code>（Dual Connectivity）</code>中，主要使用的载波，承担主要的数据传输任务。</td>
+</tr>
+<tr>
+<td><strong>次载波(SCC)</strong></td>
+<td><strong>Secondary Component Carrier</strong></td>
+<td>辅助数据传输的额外载波，通常编号为 <code>SCC0～SCC6</code>，用于提升数据吞吐量。</td>
+</tr>
+<tr>
+<td><strong>组件载波索引(CCIndex)</strong></td>
+<td><strong>Component Carrier Index</strong></td>
+<td>用于标识不同载波的索引，常转换为两位十六进制字符串用于 <code>AT</code> 指令参数传递。</td>
+</tr>
+<tr>
+<td><strong>子载波间隔(SCS)</strong></td>
+<td><strong>Subcarrier Spacing</strong></td>
+<td>子载波间隔，是 <code>OFDM</code> 调制中的基本参数，在 <code>LTE</code> 通常为 <code>15 kHz</code>，在 <code>5G NR</code> 可能有 <code>15</code>、<code>30</code>、<code>60 kHz</code> 等</td>
+</tr>
+<tr>
+<td><strong>小区</strong></td>
+<td><strong>Cell</strong></td>
+<td>移动通信网络中，基站覆盖的区域称为小区，每个小区都有对应的标识和配置参数。</td>
+</tr>
+<tr>
+<td><strong>信道</strong></td>
+<td><strong>Channel</strong></td>
+<td>在无线通信中，信道指的是一段频率范围，用于传输数据。将频谱分为若干信道，每个信道独立传输数据。频率范围以 <code>Hz</code> 或其倍数表示，信道间隔可能为数百 <code>kHz</code> 或数 <code>MHz</code>。</td>
+</tr>
+<tr>
+<td><strong>调制与解调</strong></td>
+<td><strong>Modulation &amp; Demodulation</strong></td>
+<td><strong>调制</strong>：将数据信号叠加到载波上，使其适合在无线信道中传输。<strong>解调</strong>：接收端从调制后的载波中提取出原始数据。<strong>常见调制方式</strong>：<code>AM</code>、<code>FM</code>、<code>QAM</code>、<code>PSK</code> 等。</td>
+</tr>
+<tr>
+<td><strong>频谱分配</strong></td>
+<td><strong>Spectrum Allocation</strong></td>
+<td>政府或监管机构将无线频谱划分为不同的频段，并分配给不同用途（例如移动通信、广播、卫星通信）。确保各个无线系统在不同频段中互不干扰，同时高效利用有限频谱资源。</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="3-常见射频指标"><a href="#3-常见射频指标" class="headerlink" title="3. 常见射频指标"></a>3. 常见射频指标</h4><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>全称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>RSSI</strong></td>
+<td><strong>Received Signal Strength Indicator</strong></td>
+<td><strong>接收信号强度</strong>，表示设备<strong>接收</strong>到的<strong>信号总功率</strong>，单位通常是 <code>dBm</code>。</td>
+</tr>
+<tr>
+<td><strong>RSRP</strong></td>
+<td><strong>Reference Signal Received Power</strong></td>
+<td><strong>参考信号接收功率</strong>，用于衡量 <code>LTE/5G NR</code> 网络中参考信号的<strong>平均功率</strong>，单位 <code>dBm</code>。</td>
+</tr>
+<tr>
+<td><strong>RSRQ</strong></td>
+<td><strong>Reference Signal Received Quality</strong></td>
+<td><strong>参考信号接收质量</strong>，衡量信号的<strong>质量</strong>，一般以 <code>dB</code> 表示。</td>
+</tr>
+<tr>
+<td><strong>SAR</strong></td>
+<td><strong>Specific Absorption Rate</strong></td>
+<td><strong>特定吸收率</strong>，用于测量人体吸收无线电能的速率。它用于评估设备在靠近人体时的<strong>辐射安全性</strong>。</td>
+</tr>
+<tr>
+<td><strong>DSIState</strong></td>
+<td><strong>Dynamic Signal Indicator State</strong></td>
+<td>表示设备<strong>内部信号状态的指标</strong>，可能用于描述不同天线配置下的信号变化情况。</td>
+</tr>
+<tr>
+<td><strong>TS</strong></td>
+<td><strong>Tuner Scenario</strong></td>
+<td>描述设备<strong>当前天线调谐的配置状态</strong>，决定如何在不同环境下调整射频参数。</td>
+</tr>
+<tr>
+<td><strong>Rx（接收）</strong></td>
+<td><strong>Receive</strong></td>
+<td>指设备从外部信号中接收无线电信号的过程。在手机中通常涉及多个接收通道（<code>Rx0、Rx1、Rx2、Rx3</code>），实现多天线接收和 <code>MIMO</code> 技术。</td>
+</tr>
+<tr>
+<td><strong>RAT</strong></td>
+<td><strong>Radio Access Technology</strong></td>
+<td>无线电接入技术；描述调制解调器当前处于哪种无线通信制式；主要关注 <code>LTE</code> 和 <code>NR</code> 无线通信制式</td>
+</tr>
+<tr>
+<td><strong>Tx（发送）</strong></td>
+<td><strong>Transmit</strong></td>
+<td>指设备向外发送无线电信号的过程，通常涉及发射端口、功率控制等技术。</td>
+</tr>
+<tr>
+<td><strong>Tx Band（发射频段）</strong></td>
+<td><strong>Transmit Band</strong></td>
+<td>指设备发射信号所使用的频段。不同的频段对应不同的运营商和网络标准（例如 <code>LTE</code> 或 <code>5G NR</code>）。</td>
+</tr>
+<tr>
+<td><strong>Tx Port（发射端口）</strong></td>
+<td><strong>Transmit Port</strong></td>
+<td>指用于发送无线信号的天线端口。现代设备可能有多个 <code>TX Port</code>，用于实现 <code>MIMO</code> 技术。常见的可能是 <code>2～4</code> 个 <code>TX Port</code>，标识为 <code>A、B、C、D</code> 等。</td>
+</tr>
+<tr>
+<td><strong>Tx Power（发射功率）</strong></td>
+<td><strong>Transmit Power</strong></td>
+<td>指设备在发送信号时的功率大小，通常以 <code>dBm</code> 为单位。控制 <code>Tx Power</code> 对于信号质量和电池寿命至关重要。</td>
+</tr>
+<tr>
+<td><strong>NRCell1</strong></td>
+<td><strong>New Radio Cell1</strong></td>
+<td>通常指在 <code>5G NR</code> 网络中，一个特定的小区标识，可能用于 <code>EN-DC（E-UTRAN New Radio Dual Connectivity）</code>场景。</td>
+</tr>
+<tr>
+<td><strong>MIMO</strong></td>
+<td><strong>Multiple-Input Multiple-Output</strong></td>
+<td>多输入多输出技术，利用多根天线同时传输和接收数据，提升传输效率和抗干扰能力。</td>
+</tr>
+<tr>
+<td><strong>ENDC</strong></td>
+<td><strong>E-UTRAN New Radio Dual Connectivity</strong></td>
+<td>指 <code>LTE</code> 与 <code>5G NR</code> 双连接技术，在这种模式下，设备同时连接 <code>LTE</code> 和 <code>NR</code> 小区，提高数据速率和网络稳定性。</td>
+</tr>
+<tr>
+<td><strong>DL ARFCN</strong></td>
+<td><strong>Downlink Absolute Radio Frequency Channel Number</strong></td>
+<td>下行的绝对无线频率信道编号，用于准确标识网络使用的频点。</td>
+</tr>
+<tr>
+<td><strong>UL ARFCN</strong></td>
+<td><strong>Uplink Absolute Radio Frequency Channel Number</strong></td>
+<td>上行的绝对无线频率信道编号，用于准确标识网络使用的频点。</td>
+</tr>
+<tr>
+<td><strong>N&#x2F;A</strong></td>
+<td><strong>Not Applicable</strong></td>
+<td>表示“不适用”或“无数据”，当某项数据或状态不存在时显示。</td>
+</tr>
+<tr>
+<td><strong>SINR</strong></td>
+<td><strong>Signal to Interference plus Noise Ratio</strong></td>
+<td><strong>信噪比</strong>，信号和干扰的比值，接收到的有用信号的强度与接收到的干扰信号（噪声和干扰）的强度的比值；可以简单的理解为“信噪比”。</td>
+</tr>
+<tr>
+<td><strong>PCI</strong></td>
+<td><strong>Physical Cell Identifier</strong></td>
+<td><strong>物理小区标识</strong>，<code>LTE</code>中终端以此区分不同小区的无线信号。</td>
+</tr>
+<tr>
+<td><strong>LAC</strong></td>
+<td><strong>Location Area Code</strong></td>
+<td><strong>位置区域码</strong>，是一个用于标识基站所在地区的区域代码。一个位置区可以包含多个基站，而<code>LAC</code>就是用来唯一标识这个位置区的代码。通过查询手机的<code>LAC</code>，可以确定手机用户所在的区域，从而实现初步的位置定位。</td>
+</tr>
+<tr>
+<td><strong>CID</strong></td>
+<td><strong>Cell ID</strong>或<strong>Cell Identity</strong></td>
+<td>当前驻留的小区<code>ID</code>。也叫<strong>基站编号</strong>，是一个用于标识具体基站的数据。每个基站都有一个唯一的<code>CellID</code>，这个编号是由网络运营商分配的。通过查询手机的<code>CellID</code>，可以确定手机用户接入的<strong>基站位置</strong>。由于每个基站的位置是固定的，因此结合<code>LAC</code>和<code>CellID</code>可以更加准确地定位手机用户的位置。</td>
+</tr>
+<tr>
+<td><strong>EARFCN</strong></td>
+<td><strong>E-UTRA Absolute Radio Frequency Channel Number</strong></td>
+<td><strong>载波频点编号</strong>（<code>LTE/NR</code>分别使用）。</td>
+</tr>
+<tr>
+<td><strong>NR-ARFCN</strong></td>
+<td><strong>Absolute Radio-Frequency Channel Number</strong></td>
+<td><strong>绝对无线频率信道号</strong>，是无线通信中用于标识发射和接收参考频率的代码。</td>
+</tr>
+</tbody></table>
+<h4 id="4-LTE-TDD-NR-TDD"><a href="#4-LTE-TDD-NR-TDD" class="headerlink" title="4. LTE-TDD&#x2F;NR-TDD"></a>4. LTE-TDD&#x2F;NR-TDD</h4><ul>
+<li><strong>TDD</strong>：时分双工，4G和5G常用模式（上行和下行共用频段，轮流使用）。</li>
+<li>LTE-TDD：4G TDD模式</li>
+<li>NR-TDD：5G TDD模式</li>
+</ul>
+<h4 id="5-SCPI指令"><a href="#5-SCPI指令" class="headerlink" title="5. SCPI指令"></a>5. SCPI指令</h4><ul>
+<li><strong>Standard Commands for Programmable Instruments</strong>，是一种仪表控制指令。</li>
+<li>可能是 <code>App</code> 通过<strong>SCPI指令控制测试仪表</strong>，获取信号数据或控制测试流程。</li>
+<li>如果 <code>App</code> 需要直接下发 <code>SCPI</code> 指令，我可能需要了解相关命令格式。</li>
+</ul>
+<hr>
+<h3 id="无线通信及射频测试基础知识"><a href="#无线通信及射频测试基础知识" class="headerlink" title="无线通信及射频测试基础知识"></a>无线通信及射频测试基础知识</h3><h4 id="1-信道与载波"><a href="#1-信道与载波" class="headerlink" title="1 信道与载波"></a>1 信道与载波</h4><ul>
+<li><p><strong>载波（Carrier）</strong>  </p>
+<ul>
+<li><strong>定义</strong>：在无线通信中，载波是一种固定频率的连续波，用于承载信息。  </li>
+<li><strong>用途</strong>：调制信号时，将信息叠加到载波上；接收端则从载波中提取原始信息。</li>
+<li><strong>单位</strong>：频率通常以赫兹（<code>Hz</code>）、千赫（<code>kHz</code>）、兆赫（<code>MHz</code>）或吉赫（<code>GHz</code>）表示。</li>
+</ul>
+</li>
+<li><p><strong>信道（Channel）</strong>  </p>
+<ul>
+<li><strong>定义</strong>：在无线通信中，信道指的是一段频率范围，用于传输数据。  </li>
+<li><strong>用途</strong>：将频谱分为若干信道，每个信道独立传输数据。  </li>
+<li><strong>单位</strong>：频率范围以 <code>Hz</code> 或其倍数表示，信道间隔可能为数百 <code>kHz</code> 或数 <code>MHz</code>。</li>
+</ul>
+</li>
+<li><p><strong>调制与解调（Modulation &amp; Demodulation）</strong>  </p>
+<ul>
+<li><strong>调制</strong>：将数据信号叠加到载波上，使其适合在无线信道中传输。  </li>
+<li><strong>解调</strong>：接收端从调制后的载波中提取出原始数据。  </li>
+<li><strong>常见调制方式</strong>：<code>AM</code>、<code>FM</code>、<code>QAM</code>、<code>PSK</code> 等。</li>
+</ul>
+</li>
+<li><p><strong>频谱分配（Spectrum Allocation）</strong>  </p>
+<ul>
+<li><strong>定义</strong>：政府或监管机构将无线频谱划分为不同的频段，并分配给不同用途（例如移动通信、广播、卫星通信）。  </li>
+<li><strong>作用</strong>：确保各个无线系统在不同频段中互不干扰，同时高效利用有限频谱资源。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-LTE-和-5G-NR-基本原理、架构和关键指标"><a href="#2-LTE-和-5G-NR-基本原理、架构和关键指标" class="headerlink" title="2 LTE 和 5G NR 基本原理、架构和关键指标"></a>2 LTE 和 5G NR 基本原理、架构和关键指标</h4><ul>
+<li><p><strong>LTE（Long Term Evolution）</strong>  </p>
+<ul>
+<li><strong>基本原理</strong>：第四代移动通信技术，采用 <code>OFDMA</code>（下行）和 <code>SC-FDMA</code>（上行）进行多用户调度。  </li>
+<li><strong>架构</strong>：主要包括 <code>eNodeB</code>（基站）、<code>EPC</code>（核心网）等。  </li>
+<li><strong>关键指标</strong>：  <ul>
+<li>带宽（通常为 <code>1.4、3、5、10、15、20 MHz</code>）  </li>
+<li>数据速率（峰值速率）  </li>
+<li>时延（<code>Latency</code>）  </li>
+<li><code>Spectral Efficiency</code>（频谱效率）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>5G NR（New Radio）</strong>  </p>
+<ul>
+<li><strong>基本原理</strong>：第五代无线通信技术，支持更高的数据速率、低时延和大连接数。  </li>
+<li><strong>架构</strong>：包括 <code>gNodeB</code>（<code>5G</code> 基站）、<code>5GC</code>（<code>5G</code> 核心网）等。  </li>
+<li><strong>关键指标</strong>：  <ul>
+<li>子载波间隔（<code>SCS</code>），如 <code>15 kHz、30 kHz、60 kHz</code> 甚至更高  </li>
+<li>带宽（可达 <code>100 MHz</code> 以上）  </li>
+<li>时延和可靠性要求  </li>
+<li>网络切片、多接入边缘计算（MEC）等</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-专业术语与解释"><a href="#3-专业术语与解释" class="headerlink" title="3 专业术语与解释"></a>3 专业术语与解释</h4><ul>
+<li><p><strong>PCC（Primary Component Carrier）</strong>  </p>
+<ul>
+<li><strong>全称</strong>：<code>Primary Component Carrier</code> </li>
+<li><strong>意义</strong>：在 <code>Carrier Aggregation</code> 或双连接中，主载波，用于承载主要通信数据。</li>
+</ul>
+</li>
+<li><p><strong>SCC（Secondary Component Carrier）</strong>  </p>
+<ul>
+<li><strong>全称</strong>：<code>Secondary Component Carrier</code>  </li>
+<li><strong>意义</strong>：辅载波，支持数据速率提升和网络容量扩展，通常编号为 <code>SCC0～SCC6</code>（或 <code>SCC1～SCC7</code>，根据不同系统）。</li>
+</ul>
+</li>
+<li><p><strong>组件载波索引（Component Carrier Index）</strong>  </p>
+<ul>
+<li><strong>意义</strong>：用于标识不同载波的索引，常转换为两位十六进制字符串用于 <code>AT</code> 指令参数传递。</li>
+</ul>
+</li>
+<li><p><strong>CDMA、GSM、WCDMA</strong>  </p>
+<ul>
+<li><strong>CDMA</strong>：<code>Code Division Multiple Access</code>，码分多址，主要用于部分 <code>2G/3G</code> 网络。  </li>
+<li><strong>GSM</strong>：<code>Global System for Mobile communications</code>，全球移动通信系统，广泛用于 <code>2G</code>。  </li>
+<li><strong>WCDMA</strong>：<code>Wideband CDMA</code>，用于 <code>3G</code> 网络，支持更高数据速率。</li>
+</ul>
+</li>
+<li><p><strong>LTE</strong>  </p>
+<ul>
+<li><strong>全称</strong>：<code>Long Term Evolution</code>  </li>
+<li><strong>意义</strong>：<code>4G</code> 移动通信技术，支持高速数据传输和低时延。</li>
+</ul>
+</li>
+<li><p><strong>5G NR</strong>  </p>
+<ul>
+<li><strong>全称</strong>：<code>5G New Radio</code>  </li>
+<li><strong>意义</strong>：第五代无线通信技术，支持更大带宽、低时延、大连接数等特点。</li>
+</ul>
+</li>
+<li><p><strong>SAR（Specific Absorption Rate）</strong>  </p>
+<ul>
+<li><strong>意义</strong>：特定吸收率，表示人体吸收无线电能的速率，用于评估设备辐射安全性。  </li>
+<li><strong>单位</strong>：通常以 <code>W/kg</code> 表示。</li>
+</ul>
+</li>
+<li><p><strong>DSIState（Dynamic Signal Indicator State）</strong>  </p>
+<ul>
+<li><strong>意义</strong>：表示设备内部信号状态的指标，可能用于描述不同天线配置下的信号变化情况。</li>
+</ul>
+</li>
+<li><p><strong>Tuner Scenario</strong>  </p>
+<ul>
+<li><strong>意义</strong>：描述设备当前天线调谐的配置状态，决定如何在不同环境下调整射频参数。</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://tuberose621.github.io">葛聪颖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://tuberose621.github.io/2025/05/07/RF%20%E5%B0%84%E9%A2%91%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD%E7%9B%B8%E5%85%B3/">https://tuberose621.github.io/2025/05/07/RF%20%E5%B0%84%E9%A2%91%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD%E7%9B%B8%E5%85%B3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://tuberose621.github.io" target="_blank">技术成长笔记</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/RF-%E5%B0%84%E9%A2%91/">RF 射频</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/05/07/Modem%E3%80%81Mode%20%E5%92%8C%E8%8A%AF%E7%89%87%E6%A6%82%E5%BF%B5%E5%92%8C%E5%85%B3%E7%B3%BB%20/" title="Modem、Mode 和芯片概念和关系"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Modem、Mode 和芯片概念和关系</div></div><div class="info-2"><div class="info-item-1">移动通信相关的 APP&#x2F;行业 里，Modem、Mode 和 芯片 这些概念主要和 移动通信、无线调制解调、基带处理 等技术紧密相关。  📌 1. Modem（调制解调器）🔹 概念 Modem（调制解调器） 是 调制（Modulation）和解调（Demodulation） 的缩写，它是无线通信系统的核心组件。 主要负责 信号的调制和解调，用于 手机、基站、数据卡等设备 的无线通信。 基带处理（Baseband Processing）也是 Modem 重要的组成部分，负责 LTE、5G 信号的编码&#x2F;解码、调制&#x2F;解调等工作。  🔹 作用📡 无线通信桥梁：  调制（Modulation）：将数字信号转换为 模拟射频信号，方便无线传输。 解调（Demodulation）：接收到无线信号后，将其转换回 数字数据 供上层应用使用。  📶 管理无线协议栈：  Modem 负责处理 LTE、5G 的 信令交互、数据传输 和 网络连接管理。  💾 控制网络选择和切换：  例如 4G 和 5G 之间的切换，由 Modem...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">葛聪颖</div><div class="author-info-description">记录 iOS 架构设计、组件化实践、AI 工具探索与技术成长</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-RF-%E5%B0%84%E9%A2%91%EF%BC%88Radio-frequency%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1.RF 射频（Radio frequency）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Mode%E3%80%81%E8%8A%AF%E7%89%87"><span class="toc-number">2.</span> <span class="toc-text">2. Mode、芯片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E4%B8%8E%E5%B0%84%E9%A2%91%E6%B5%8B%E8%AF%95%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">3. 无线通信与射频测试相关知识基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%B8%B8%E8%A7%81%E5%B0%84%E9%A2%91%E6%8C%87%E6%A0%87"><span class="toc-number">4.</span> <span class="toc-text">3. 常见射频指标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-LTE-TDD-NR-TDD"><span class="toc-number">5.</span> <span class="toc-text">4. LTE-TDD&#x2F;NR-TDD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-SCPI%E6%8C%87%E4%BB%A4"><span class="toc-number">6.</span> <span class="toc-text">5. SCPI指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E5%8F%8A%E5%B0%84%E9%A2%91%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number"></span> <span class="toc-text">无线通信及射频测试基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BF%A1%E9%81%93%E4%B8%8E%E8%BD%BD%E6%B3%A2"><span class="toc-number">1.</span> <span class="toc-text">1 信道与载波</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-LTE-%E5%92%8C-5G-NR-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E3%80%81%E6%9E%B6%E6%9E%84%E5%92%8C%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87"><span class="toc-number">2.</span> <span class="toc-text">2 LTE 和 5G NR 基本原理、架构和关键指标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD%E4%B8%8E%E8%A7%A3%E9%87%8A"><span class="toc-number">3.</span> <span class="toc-text">3 专业术语与解释</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/MCP-%E4%B8%8E-Vibe-Coding/" title="MCP 与 Vibe Coding">MCP 与 Vibe Coding</a><time datetime="2025-06-06T12:18:27.000Z" title="发表于 2025-06-06 20:18:27">2025-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/RN-%E4%B8%8D%E6%98%AF-Webview/" title="RN 不是 Webview">RN 不是 Webview</a><time datetime="2025-06-06T10:54:43.000Z" title="发表于 2025-06-06 18:54:43">2025-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/%E6%BC%82%E4%BA%AE%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8D%8F%E8%AE%AE/" title="漂亮的使用协议">漂亮的使用协议</a><time datetime="2025-06-06T10:06:15.000Z" title="发表于 2025-06-06 18:06:15">2025-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/07/SwiftUI%20%E5%AD%A6%E4%B9%A0/" title="SwiftUI 学习">SwiftUI 学习</a><time datetime="2025-05-07T10:05:15.000Z" title="发表于 2025-05-07 18:05:15">2025-05-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/07/Swift%20%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-Task%20%E5%92%8C%20async-await%20/" title="Swift 中的函数式编程以及 Task 和 async/await 的使用">Swift 中的函数式编程以及 Task 和 async/await 的使用</a><time datetime="2025-05-07T10:04:15.000Z" title="发表于 2025-05-07 18:04:15">2025-05-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 葛聪颖</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
